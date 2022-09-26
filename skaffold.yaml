@@ -9,7 +9,7 @@ build:
     push: false
   artifacts:
     - image: nghilt19411/auth
-      context: auth
+      context: Auth
       docker:
         dockerfile: Dockerfile
       sync:
