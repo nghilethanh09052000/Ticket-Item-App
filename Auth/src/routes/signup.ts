@@ -1,9 +1,9 @@
 /** 
-    Bad request handler
+    Expreess App
 **/
 import { body, validationResult } from "express-validator";
 import express,{Request,Response}  from "express";
-
+import jwt from "jsonwebtoken";
 /*
     Bad request handler
 */
@@ -40,6 +40,16 @@ async (req:Request,res:Response)=>{
     }
     const user = User.build({email,password})
     await user.save();
+
+    // Generate Json Web Token:
+    const userJwt = jwt.sign(
+        {id:user.id,email:user.email},
+        'nghi'
+        )
+    // Store on session:
+    req.session = {
+        jwt:userJwt
+    };
     res.status(201).send(user)
     
     //res.send({})
