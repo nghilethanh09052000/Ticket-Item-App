@@ -43,8 +43,11 @@ async (req:Request,res:Response)=>{
 
     // Generate Json Web Token:
     const userJwt = jwt.sign(
-        {id:user.id,email:user.email},
-        'nghi'
+        {
+            id:user.id
+            ,email:user.email
+        },
+        process.env.JWT_KEY!
         )
     // Store on session:
     req.session = {
