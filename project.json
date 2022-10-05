@@ -1,0 +1,10 @@
+[
+    {
+        "workdir":"Auth",
+        "image":"auth"
+    },
+    {
+        "workdir":"Client",
+        "image":"client"
+    }
+]

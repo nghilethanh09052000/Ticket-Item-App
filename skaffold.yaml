@@ -15,7 +15,7 @@ build:
       sync:
         manual:
           - dest: .
-            src: 'src/**/*.ts'
+            src: 'src/**/*.js'
     - image: nghilt19411/client
       context: Client
       docker:
@@ -23,4 +23,4 @@ build:
       sync:
         manual:
           - dest: .
-            src: '**/*.ts'
+            src: '**/*.js'
