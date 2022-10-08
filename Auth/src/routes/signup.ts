@@ -7,8 +7,8 @@ import jwt from "jsonwebtoken";
 /*
     Bad request handler
 */
-import { BadRequestError } from "../errors/bad-request-error";
-import { ValidateRequest } from "../middlewares/validate-request";
+import { BadRequestError } from "@nghilt/common";
+import { ValidateRequest } from "@nghilt/common";
 /*
     Models
 */

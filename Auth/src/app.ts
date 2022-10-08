@@ -12,10 +12,10 @@ import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 
 // Middleware:
-import { errorHandler } from "./middlewares/error-handler";
+import { errorHandler } from "@nghilt/common";
 
 // Not found Error:
-import { NotFoundError } from "./errors/not-found-error";
+import { NotFoundError } from "@nghilt/common";
 
 
 

@@ -9,9 +9,9 @@ import jwt from "jsonwebtoken";
 
     Bad request handler
 */
-import { RequestValidationError} from "../errors/request-validation-error";
-import { ValidateRequest } from "../middlewares/validate-request";
-import { BadRequestError } from "../errors/bad-request-error";
+import { RequestValidationError} from "@nghilt/common";
+import { ValidateRequest } from "@nghilt/common";
+import { BadRequestError } from "@nghilt/common";
 /*
     Models
 */
