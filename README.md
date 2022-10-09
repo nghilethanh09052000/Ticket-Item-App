@@ -14,3 +14,8 @@
 # Database Design:
 ![Diagram-Database Design drawio](https://user-images.githubusercontent.com/86466679/191885363-ff45e384-8eda-44c8-8a92-63a7cd0e867e.png)
 # Kubernetes Infrastruture:
+
+# Nats Streaming Connection:
+### Publisher:
+
+### Listener:
