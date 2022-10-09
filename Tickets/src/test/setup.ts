@@ -2,27 +2,30 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import jwt from 'jsonwebtoken';
+
+
+// declare global {
+//   namespace NodeJS {
+//     interface Global {
+//       signin(): string[];
+//     }
+//   }
+// }
 
 declare global {
-  namespace NodeJS {
-    interface Global {
-      signin(): Promise<string[]>;
-    }
-  }
+  var signin: () => string[];
 }
 
 let mongo: any;
 beforeAll(async () => {
-  process.env.JWT_KEY = 'asdfasdf';
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  process.env.JWT_KEY = "asdfasdf";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-  mongo = new MongoMemoryServer();
-  const mongoUri = await mongo.getUri();
+  mongo = await MongoMemoryServer.create();
+  const mongoUri = mongo.getUri();
 
-  await mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+  await mongoose.connect(mongoUri, {});
 });
 
 beforeEach(async () => {
@@ -34,23 +37,32 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await mongo.stop();
+  if (mongo) {
+    await mongo.stop();
+  }
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
+global.signin =  () => {
+  
+  // Build a JWT payload . {id,email}:
+  const payload = {
+    id:'123asda',
+    email:'test@test.com'
+  }
 
-  const response = await request(app)
-    .post('/api/users/signup')
-    .send({
-      email,
-      password
-    })
-    .expect(201);
+  // Create the JWT:
+  const token = jwt.sign(payload,process.env.JWT_KEY!)
 
-  const cookie = response.get('Set-Cookie');
+  // Build a session Object. {JWT: MY_JWT}:
+  const session = {jwt:token}
 
-  return cookie;
+  // Turn that session into JSON:
+  const sessionJSON = JSON.stringify(session)
+
+  // Take the JSON and encode it as base64
+  const base64 = Buffer.from(sessionJSON).toString('base64')
+  return [`session=${base64}`];
+
+
 };
