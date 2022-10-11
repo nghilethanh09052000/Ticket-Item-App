@@ -1,38 +1,45 @@
-import nats, { Message } from 'node-nats-streaming'
-import { randomBytes } from 'crypto';
+import nats from "node-nats-streaming";
+import { randomBytes } from "crypto";
+import { TicketCreatedListener } from "./events/ticket-created-listener";
+
+
+
 
 
 
 console.clear();
-const stan = nats.connect('ticketing', randomBytes(4).toString('hex'), {
-    url: 'http://localhost:4222'
+const stan = nats.connect("ticketing", randomBytes(4).toString("hex"), {
+  url: "http://localhost:4222",
 });
 
-stan.on('connect', () => {
-    console.log('Listener connect to nats');
+stan.on("connect", () => {
+  console.log("Listener connect to nats");
 
-    stan.on('close', () => {
-        console.log('Nats connection closed')
-        process.exit();
-    })
+  stan.on("close", () => {
+    console.log("Nats connection closed");
+    process.exit();
+  });
+  new TicketCreatedListener(stan).listen();
 
-    const options = stan.subscriptionOptions()
-        .setManualAckMode(true)
-    const subscription = stan.subscribe(
-        'ticket:created',   //Channel
-        'orders-service-queue-group', //Queue Group
-        options
-    );
+//   const options = stan.subscriptionOptions().setManualAckMode(true);
+//   const subscription = stan.subscribe(
+//     "ticket:created", //Channel
+//     "orders-service-queue-group", //Queue Group
+//     options
+//   );
 
-    subscription.on('message', (msg: Message) => {
-        const data = msg.getData();
-        if (typeof data === 'string') {
-            console.log(`Received event #${msg.getSequence()}, with data ${JSON.parse(data)}`)
-        }
-        msg.ack()
-    })
-})
+//   subscription.on("message", (msg: Message) => {
+//     const data = msg.getData();
+//     if (typeof data === "string") {
+//       console.log(
+//         `Received event #${msg.getSequence()}, with data ${JSON.parse(data)}`
+//       );
+//     }
+    //msg.ack();
+  //});
 
-process.on('SIGINT', () => stan.close())
+});
+process.on("SIGINT", () => stan.close());
+process.on("SIGTERM", () => stan.close());
 
-process.on('SIGTERM', () => stan.close())
+
