@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { requireAuth, ValidateRequest } from "@nghilt/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/ticket";
+import { TicketCreatedPublisher } from "../events/publisher/ticker-created-publisher";
+
 
 const router = express.Router();
 
@@ -24,6 +26,13 @@ router.post(
       userId:req.currentUser!.id
     })
     await ticket.save();
+
+    await new TicketCreatedPublisher(client).publish({
+      id:ticket.id,
+      title:ticket.title,
+      price:ticket.price,
+      userId:ticket.userId
+    })
     res.status(201).send(ticket)
   }
 );
