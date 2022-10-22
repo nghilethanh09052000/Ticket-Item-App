@@ -5,17 +5,11 @@ import { app } from '../app';
 import jwt from 'jsonwebtoken';
 
 
-// declare global {
-//   namespace NodeJS {
-//     interface Global {
-//       signin(): string[];
-//     }
-//   }
-// }
-
 declare global {
   var signin: () => string[];
 }
+
+jest.mock('../nats-wrapper');
 
 let mongo: any;
 beforeAll(async () => {

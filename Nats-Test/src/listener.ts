@@ -19,7 +19,7 @@ stan.on("connect", () => {
     console.log("Nats connection closed");
     process.exit();
   });
-  new TicketCreatedListener(stan).listen();
+  //new TicketCreatedListener(stan).listen();
 
 //   const options = stan.subscriptionOptions().setManualAckMode(true);
 //   const subscription = stan.subscribe(
