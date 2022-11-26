@@ -24,6 +24,14 @@ build:
         manual:
           - dest: .
             src: 'src/**/*.js'
+    - image: nghilt19411/orders
+      context: Orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.js'
     - image: nghilt19411/client
       context: Client
       docker:
