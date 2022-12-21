@@ -25,3 +25,9 @@ cd ..
 cd %CUR_DIR%/Orders
 call docker build -t nghilt19411/orders .
 call docker push nghilt19411/orders
+
+cd .. 
+
+cd %CUR_DIR%/Expiration
+call docker build -t nghilt19411/expiration .
+call docker push nghilt19411/expiration
