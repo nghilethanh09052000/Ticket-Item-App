@@ -33,7 +33,15 @@ build:
           - dest: .
             src: 'src/**/*.js'
     - image: nghilt19411/expiration
-      context: expiration
+      context: Expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: nghilt19411/payments
+      context: Payments
       docker:
         dockerfile: Dockerfile
       sync:
