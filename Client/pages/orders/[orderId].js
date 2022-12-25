@@ -32,12 +32,14 @@ const OrderShow = ({ order, currentUser }) => {
     return <div>Order Expired</div>;
   }
 
+  // pk_test_51MIa1lEV56nKOoaooUHZRWBvkLVFo2OlIjDHVc97EDkVFenUx08oHIDHSeNHuLfpBnqut037Qb6tLpRiQ6H9y04Q00dx5wnV2B
+
   return (
     <div>
       Time left to pay: {timeLeft} seconds
       <StripeCheckout
         token={({ id }) => doRequest({ token: id })}
-        stripeKey="pk_test_JMdyKVvf8EGTB0Fl28GsN7YY"
+        stripeKey="sk_test_51MIa1lEV56nKOoaoHMR8fJYh1hxNs13nngjf9MbJZj5vrGxMLLEwtstz3CBw3YeHJX1jSKjiFltL1lbbf9ANF3pu00qCOmWzhR"
         amount={order.ticket.price * 100}
         email={currentUser.email}
       />

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@nghilt/common";
 import {updateIfCurrentPlugin} from 'mongoose-update-if-current';
-import { TicketDoc } from "./ticket";
+
 
 
 interface OrderAttrs {
