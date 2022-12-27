@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 const start = async () => {
+    console.log('Nghi')
     if(!process.env.JWT_KEY)
     {
         throw new Error('JWT not be definded')
